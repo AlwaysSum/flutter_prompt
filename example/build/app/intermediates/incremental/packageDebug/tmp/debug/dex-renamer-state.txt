@@ -1,0 +1,4 @@
+#Tue Nov 07 16:53:57 CST 2023
+base.0=/Users/mac/Documents/Sunflower/workspace/flutter_prompt/example/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
