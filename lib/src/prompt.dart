@@ -78,6 +78,24 @@ class Prompt {
     return _showToastModel(model);
   }
 
+  /// 显示一个组件
+  static Future showToastWidget(
+    WidgetBuilder builder, {
+    Alignment alignment = Alignment.center,
+    String? id,
+    Duration? duration,
+    ToastType? type,
+  }) {
+    final model = ToastModel(
+      builder,
+      id: id,
+      duration: duration ?? const Duration(seconds: 2),
+      position: alignment,
+      type: type,
+    );
+    return _showToastModel(model);
+  }
+
   ///通过实体类显示 toast
   static Future _showToastModel(ToastModel model) {
     instance.toastList.value.add(model);
@@ -101,7 +119,7 @@ class Prompt {
   final loading = ValueNotifier<LoadingModel?>(null);
 
   ///显示 Loading
-  static showLoading(String? msg, {String? defaultMsg, Color? maskColor}) {
+  static showLoading({String? msg, String? defaultMsg, Color? maskColor}) {
     instance.loading.value = LoadingModel(
       (context) => instance.style.customLoadingStyle(
         context,

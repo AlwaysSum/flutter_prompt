@@ -25,8 +25,7 @@ class _MyAppState extends State<MyApp> {
               const TextStyle(color: Colors.white, fontSize: 10),
             ),
             backgroundColor: MaterialStateProperty.resolveWith(
-                  (states) =>
-              switch (states) {
+              (states) => switch (states) {
                 MaterialState.disabled => Colors.grey,
                 MaterialState.selected => Colors.green,
                 MaterialState.pressed => Colors.yellow,
@@ -36,14 +35,14 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      home: Prompt.initRoot(
-          child: const Home(),
-          style: MyCustomStyle()
-      ),
+      //Method 1
+      // home: const Home(),
+      // builder: Prompt.init(style: MyCustomStyle()),
+      //Method 2
+      home: Prompt.initRoot(child: const Home(), style: MyCustomStyle()),
     );
   }
 }
-
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -165,6 +164,7 @@ class _HomeState extends State<Home> {
                     Prompt.showToast(
                       "Warning ${count++}",
                       type: ToastType.warning,
+                      duration: const Duration(seconds: 3),
                     );
                   },
                   child: const Text("Warning"),
@@ -215,7 +215,7 @@ class _HomeState extends State<Home> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Prompt.showLoading("拼命加载中...");
+                    Prompt.showLoading(msg: "拼命加载中...");
                     Future.delayed(const Duration(seconds: 1), () {
                       Prompt.hideLoading();
                     });
@@ -230,7 +230,6 @@ class _HomeState extends State<Home> {
     );
   }
 }
-
 
 class MyCustomStyle with FlutterPromptCustomStyle {
   ///自定义颜色
@@ -316,9 +315,9 @@ class MyCustomStyle with FlutterPromptCustomStyle {
   @override
   Widget customToastStyle(BuildContext context, String msg,
       {Alignment alignment = Alignment.center,
-        String? id,
-        Duration? duration,
-        ToastType? type}) {
+      String? id,
+      Duration? duration,
+      ToastType? type}) {
     return super.customToastStyle(context, msg,
         alignment: alignment, id: id, duration: duration, type: type);
   }
