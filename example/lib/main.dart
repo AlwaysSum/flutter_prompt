@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_prompt/flutter_prompt.dart';
+import 'package:flutter_prompt_example/custom_style.dart';
 import 'package:flutter_prompt_example/home.dart';
 
 void main() {
@@ -37,6 +38,7 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Prompt.initRoot(
         child: const Home(),
+        style: MyCustomStyle()
       ),
     );
   }

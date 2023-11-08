@@ -41,7 +41,11 @@ class Prompt {
   }
 
   /// init FlutterPrompt By Widget
-  static FlutterPromptRoot initRoot({Widget? child}) {
+  static FlutterPromptRoot initRoot({
+    Widget? child,
+    FlutterPromptCustomStyle? style,
+  }) {
+    instance._style = style;
     return FlutterPromptRoot(child: child);
   }
 

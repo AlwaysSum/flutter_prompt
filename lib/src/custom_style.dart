@@ -8,26 +8,26 @@ class DefaultFlutterPromptCustomStyle with FlutterPromptCustomStyle {}
 mixin FlutterPromptCustomStyle {
   ///一些配置
   ///颜色
-  final colorSuccess = Colors.green;
-  final colorError = Colors.red;
-  final colorInfo = Colors.blue;
-  final colorWarning = Colors.yellow.shade700;
-  final colorDefault = Colors.black54;
+  final Color colorSuccess = Colors.green;
+  final Color colorError = Colors.red;
+  final Color colorInfo = Colors.blue;
+  final Color colorWarning = Colors.yellow.shade700;
+  final Color colorDefault = Colors.black54;
 
   ///图标
-  final iconSuccess = const Icon(
+  final Widget iconSuccess = const Icon(
     Icons.check_circle_outline,
     color: Colors.white,
   );
-  final iconError = const Icon(
+  final Widget iconError = const Icon(
     Icons.error_outline,
     color: Colors.white,
   );
-  final iconInfo = const Icon(
+  final Widget iconInfo = const Icon(
     Icons.info,
     color: Colors.white,
   );
-  final iconWarning = const Icon(
+  final Widget iconWarning = const Icon(
     Icons.warning_amber,
     color: Colors.white,
   );
@@ -35,7 +35,7 @@ mixin FlutterPromptCustomStyle {
 
   ///toast 样式
   final toastPadding = const EdgeInsets.symmetric(vertical: 8, horizontal: 16);
-  final toastRadius = BorderRadius.circular(8);
+  final toastRadius = BorderRadius.circular(20);
   final double toastGap = 4;
 
   double toastMaxWidth(BuildContext context) =>
@@ -94,11 +94,11 @@ mixin FlutterPromptCustomStyle {
   ///一些 loading 配置
   final loadingWidth = 80.0;
   final loadingHeight = 80.0;
-  final loadingColor = Colors.black54;
-  final loadingBgColor = Colors.black54;
+  final Color loadingColor = Colors.black54;
+  final Color loadingBgColor = Colors.black54;
   final loadingBgRadius = BorderRadius.circular(8);
   final loadingBgMargin = const EdgeInsets.all(8);
-  final loadingSpin = const Center(
+  final Widget loadingSpin = const Center(
     child: SpinCircle(
       color: Colors.white,
       size: 50,
