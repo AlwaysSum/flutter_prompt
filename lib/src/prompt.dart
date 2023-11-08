@@ -81,10 +81,11 @@ class Prompt {
   ///通过实体类显示 toast
   static Future _showToastModel(ToastModel model) {
     instance.toastList.value.add(model);
-    if (instance.toastList.value.length > 3) {
+    final maxCount = instance.style.toastMaxCount;
+    if (instance.toastList.value.length > maxCount) {
       instance.toastList.value.removeRange(
         0,
-        instance.toastList.value.length - 3,
+        instance.toastList.value.length - maxCount,
       );
     }
     instance.toastList.notifyListeners();

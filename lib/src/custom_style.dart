@@ -37,6 +37,7 @@ mixin FlutterPromptCustomStyle {
   final toastPadding = const EdgeInsets.symmetric(vertical: 8, horizontal: 16);
   final toastRadius = BorderRadius.circular(20);
   final double toastGap = 4;
+  final int toastMaxCount = 3;
 
   double toastMaxWidth(BuildContext context) =>
       MediaQuery.of(context).size.width * 0.8;
@@ -71,6 +72,7 @@ mixin FlutterPromptCustomStyle {
         color: color,
         borderRadius: toastRadius,
       ),
+      margin:  EdgeInsets.symmetric(vertical: toastGap),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
