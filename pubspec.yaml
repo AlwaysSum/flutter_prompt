@@ -1,6 +1,6 @@
 name: flutter_prompt
 description: "A lightweight prompt library, including: toast, loading, EasyLoading,bubbles, etc. 一个轻巧的提示库，包含有：吐司、加载、气泡等。"
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/AlwaysSum/flutter_prompt
 
 environment:
