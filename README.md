@@ -167,6 +167,10 @@ class MyCustomStyle with FlutterPromptCustomStyle {
   @override
   double get loadingWidth => super.loadingWidth;
 
+  @override
+  Alignment get toastDefaultAlignment => Alignment.topCenter;
+
+
   ///自定义 loading 的显示组件
   @override
   Widget customLoadingStyle(BuildContext context, String? msg,
@@ -178,7 +182,7 @@ class MyCustomStyle with FlutterPromptCustomStyle {
   ///自定义 toast 的显示方式
   @override
   Widget customToastStyle(BuildContext context, String msg,
-      {Alignment alignment = Alignment.center,
+      {Alignment? alignment = Alignment.center,
         String? id,
         Duration? duration,
         ToastType? type}) {
