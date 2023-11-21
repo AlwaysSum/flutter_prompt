@@ -19,10 +19,10 @@ class FlutterPromptRoot extends StatelessWidget {
           // 页面
           child ?? Container(),
           //bubble
-          // toast
-          const ToastContainer(),
           // loading
           const LoadingContainer(),
+          // toast
+          const ToastContainer(),
         ],
       ),
     );

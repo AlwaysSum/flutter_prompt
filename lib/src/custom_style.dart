@@ -38,6 +38,7 @@ mixin FlutterPromptCustomStyle {
   final toastRadius = BorderRadius.circular(20);
   final double toastGap = 4;
   final int toastMaxCount = 3;
+  final Alignment toastDefaultAlignment = Alignment.center;
 
   double toastMaxWidth(BuildContext context) =>
       MediaQuery.of(context).size.width * 0.8;
@@ -46,11 +47,13 @@ mixin FlutterPromptCustomStyle {
   Widget customToastStyle(
     BuildContext context,
     String msg, {
-    Alignment alignment = Alignment.center,
+    Alignment? alignment,
     String? id,
     Duration? duration,
     ToastType? type,
   }) {
+    alignment ??= toastDefaultAlignment;
+
     final color = switch (type) {
       ToastType.success => colorSuccess,
       ToastType.error => colorError,

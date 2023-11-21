@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_prompt/flutter_prompt.dart';
 
+import 'future_widget.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -19,17 +21,21 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: ThemeData(
         useMaterial3: true,
+        textTheme: const TextTheme(
+          labelLarge: TextStyle(color: Colors.white, fontSize: 12),
+        ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             textStyle: MaterialStateProperty.all(
-              const TextStyle(color: Colors.white, fontSize: 10),
+              const TextStyle(color: Colors.white, fontSize: 14),
             ),
+            foregroundColor: MaterialStateProperty.all(Colors.white),
             backgroundColor: MaterialStateProperty.resolveWith(
               (states) => switch (states) {
                 MaterialState.disabled => Colors.grey,
                 MaterialState.selected => Colors.green,
                 MaterialState.pressed => Colors.yellow,
-                _ => Colors.blue,
+                _ => Colors.green,
               },
             ),
           ),
@@ -86,6 +92,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     var count = 1;
+
+    final style = MyCustomStyle();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Flutter Prompt'),
@@ -106,13 +114,16 @@ class _HomeState extends State<Home> {
               spacing: 10,
               children: [
                 ElevatedButton(
+                  // style: ButtonStyle(
+                  //   textStyle: MaterialStateProperty.all(TextStyle(color: Colors.red)),
+                  // ),
                   onPressed: () {
                     Prompt.showToast(
                       "Top Left ${count++}",
                       alignment: Alignment.topLeft,
                     );
                   },
-                  child: const Text("Top Left"),
+                  child: Text("Top Left"),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -131,43 +142,6 @@ class _HomeState extends State<Home> {
                     );
                   },
                   child: const Text("Top Right"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Prompt.showToast(
-                      "Success ${count++}",
-                      type: ToastType.success,
-                    );
-                  },
-                  child: const Text("Success"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Prompt.showToast(
-                      "Info ${count++}",
-                      type: ToastType.info,
-                    );
-                  },
-                  child: const Text("Info"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Prompt.showToast(
-                      "Error ${count++}",
-                      type: ToastType.error,
-                    );
-                  },
-                  child: const Text("Error"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Prompt.showToast(
-                      "Warning ${count++}",
-                      type: ToastType.warning,
-                      duration: const Duration(seconds: 3),
-                    );
-                  },
-                  child: const Text("Warning"),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -208,6 +182,96 @@ class _HomeState extends State<Home> {
             ),
             Title(
               color: Colors.black,
+              child: const Text("Theme Toast"),
+            ),
+            Wrap(
+              spacing: 4,
+              children: [
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(style.colorSuccess),
+                  ),
+                  onPressed: () {
+                    Prompt.showToast(
+                      "Success ${count++}",
+                      type: ToastType.success,
+                    );
+                  },
+                  child: const Text("Success"),
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(style.colorInfo),
+                  ),
+                  onPressed: () {
+                    Prompt.showToast(
+                      "Info ${count++}",
+                      type: ToastType.info,
+                    );
+                  },
+                  child: const Text("Info"),
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(style.colorError),
+                  ),
+                  onPressed: () {
+                    Prompt.showToast(
+                      "Error ${count++}",
+                      type: ToastType.error,
+                    );
+                  },
+                  child: const Text("Error"),
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(style.colorWarning),
+                  ),
+                  onPressed: () {
+                    Prompt.showToast(
+                      "Warning ${count++}",
+                      type: ToastType.warning,
+                      duration: const Duration(seconds: 3),
+                    );
+                  },
+                  child: const Text("Warning"),
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(style.colorWarning),
+                  ),
+                  onPressed: () {
+                    Prompt.showToastWidget(
+                      (ctx) => Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade400,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        child: const Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CircleAvatar(
+                              child: Icon(Icons.verified_user),
+                            ),
+                            Text("hello~~")
+                          ],
+                        ),
+                      ),
+                      type: ToastType.warning,
+                      duration: const Duration(seconds: 3),
+                    );
+                  },
+                  child: const Text("CustomToast"),
+                ),
+              ],
+            ),
+            Title(
+              color: Colors.black,
               child: const Text("Loading"),
             ),
             Row(
@@ -220,15 +284,27 @@ class _HomeState extends State<Home> {
                       Prompt.hideLoading();
                     });
                   },
-                  child: const Text("Bottom Right"),
+                  child: const Text("Loading"),
                 ),
               ],
+            ),
+            FutureWidget(
+              future: _testAsyncLoading(),
+              onSuccess: (BuildContext context, data) {
+                return Text("async loading $data");
+              },
             )
           ],
         ),
       ),
     );
   }
+}
+
+Future<int> _testAsyncLoading() {
+  Prompt.showLoading(msg: "async loading demo");
+  return Future.delayed(const Duration(seconds: 3), () => 123)
+      .whenComplete(() => Prompt.hideLoading());
 }
 
 class MyCustomStyle with FlutterPromptCustomStyle {
@@ -303,6 +379,9 @@ class MyCustomStyle with FlutterPromptCustomStyle {
   @override
   double get loadingWidth => super.loadingWidth;
 
+  @override
+  Alignment get toastDefaultAlignment => Alignment.topCenter;
+
   ///自定义 loading 的显示组件
   @override
   Widget customLoadingStyle(BuildContext context, String? msg,
@@ -314,7 +393,7 @@ class MyCustomStyle with FlutterPromptCustomStyle {
   ///自定义 toast 的显示方式
   @override
   Widget customToastStyle(BuildContext context, String msg,
-      {Alignment alignment = Alignment.center,
+      {Alignment? alignment = Alignment.center,
       String? id,
       Duration? duration,
       ToastType? type}) {

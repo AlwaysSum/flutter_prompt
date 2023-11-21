@@ -106,12 +106,17 @@ class Prompt {
         instance.toastList.value.length - maxCount,
       );
     }
-    instance.toastList.notifyListeners();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      instance.toastList.notifyListeners();
+    });
 
     ///延时删除
     return Future.delayed(model.duration, () {
       instance.toastList.value.remove(model);
-      instance.toastList.notifyListeners();
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        instance.toastList.notifyListeners();
+      });
     });
   }
 
@@ -120,16 +125,18 @@ class Prompt {
 
   ///显示 Loading
   static showLoading({String? msg, String? defaultMsg, Color? maskColor}) {
-    instance.loading.value = LoadingModel(
-      (context) => instance.style.customLoadingStyle(
-        context,
-        msg,
-        defaultMsg: defaultMsg,
-        maskColor: maskColor,
-      ),
-      maskColor: maskColor ?? instance.style.loadingDefaultMaskColor,
-    );
-    instance.loading.notifyListeners();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      instance.loading.value = LoadingModel(
+        (context) => instance.style.customLoadingStyle(
+          context,
+          msg,
+          defaultMsg: defaultMsg,
+          maskColor: maskColor,
+        ),
+        maskColor: maskColor ?? instance.style.loadingDefaultMaskColor,
+      );
+      instance.loading.notifyListeners();
+    });
   }
 
   ///关闭 Loading
