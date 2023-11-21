@@ -303,7 +303,8 @@ class _HomeState extends State<Home> {
 
 Future<int> _testAsyncLoading() {
   Prompt.showLoading(msg: "async loading demo");
-  return Future.delayed(const Duration(seconds: 3), () => 123)
+  return Future.delayed(const Duration(seconds:2), () => 123)
+      // return Future.value(123)
       .whenComplete(() => Prompt.hideLoading());
 }
 

@@ -123,25 +123,38 @@ class Prompt {
   ///loading values
   final loading = ValueNotifier<LoadingModel?>(null);
 
+  /// 该标志处理异步任务的 loading 调用问题，如果在组件没有渲染时调用 loading，
+  /// 但是很快的结束了 loading 则会出现 loading的 hide 在 show 之前关闭的情况。
+  /// WidgetsBinding.instance.addPostFrameCallback是为了处理setState() or markNeedsBuild() called during build.异常情况
+  static var _loadingFlag = false;
+
   ///显示 Loading
   static showLoading({String? msg, String? defaultMsg, Color? maskColor}) {
+    _loadingFlag = true;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      instance.loading.value = LoadingModel(
-        (context) => instance.style.customLoadingStyle(
-          context,
-          msg,
-          defaultMsg: defaultMsg,
-          maskColor: maskColor,
-        ),
-        maskColor: maskColor ?? instance.style.loadingDefaultMaskColor,
-      );
-      instance.loading.notifyListeners();
+      if (_loadingFlag) {
+        instance.loading.value = LoadingModel(
+          (context) => instance.style.customLoadingStyle(
+            context,
+            msg,
+            defaultMsg: defaultMsg,
+            maskColor: maskColor,
+          ),
+          maskColor: maskColor ?? instance.style.loadingDefaultMaskColor,
+        );
+        instance.loading.notifyListeners();
+      }
     });
   }
 
   ///关闭 Loading
   static hideLoading() {
-    instance.loading.value = null;
-    instance.loading.notifyListeners();
+    _loadingFlag = false;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (!_loadingFlag) {
+        instance.loading.value = null;
+        instance.loading.notifyListeners();
+      }
+    });
   }
 }
