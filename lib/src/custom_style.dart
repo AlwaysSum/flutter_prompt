@@ -75,15 +75,12 @@ mixin FlutterPromptCustomStyle {
         color: color,
         borderRadius: toastRadius,
       ),
-      margin:  EdgeInsets.symmetric(vertical: toastGap),
+      margin: EdgeInsets.symmetric(vertical: toastGap),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) ...[icon, SizedBox(width: toastGap)],
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: toastMaxWidth(context),
-            ),
+          Flexible(
             child: Text(
               msg,
               style: const TextStyle(color: Colors.white),

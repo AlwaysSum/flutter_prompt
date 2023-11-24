@@ -114,9 +114,7 @@ class Prompt {
     ///延时删除
     return Future.delayed(model.duration, () {
       instance.toastList.value.remove(model);
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        instance.toastList.notifyListeners();
-      });
+      instance.toastList.notifyListeners();
     });
   }
 

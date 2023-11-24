@@ -173,7 +173,9 @@ class _HomeState extends State<Home> {
                 ElevatedButton(
                   onPressed: () {
                     Prompt.showToast(
-                      "A long text, test the display effect.,A long text, test the display effect.,A long text, test the display effect.",
+                      "A long text, test the display effect.,A long text, test the display effect.,A long text, test the display effect.A long text, test the display effect.,A long text, test the display effect.,A long text, test the display effect.A long text, test the display effect.,A long text, test the display effect.,A long text, test the display effect.",
+                      type: ToastType.error,
+                      // alignment: Alignment.topCenter,
                     );
                   },
                   child: const Text("Long Text"),
@@ -303,8 +305,9 @@ class _HomeState extends State<Home> {
 
 Future<int> _testAsyncLoading() {
   Prompt.showLoading(msg: "async loading demo");
-  return Future.delayed(const Duration(seconds:2), () => 123)
-      // return Future.value(123)
+  Prompt.showToast("你好啊");
+  // return Future.delayed(const Duration(seconds:2), () => 123)
+      return Future.value(123)
       .whenComplete(() => Prompt.hideLoading());
 }
 

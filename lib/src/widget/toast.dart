@@ -43,10 +43,14 @@ class _ToastContainerState extends State<ToastContainer> {
             ),
             //中间
             Center(
-              child: list
-                  .lastWhere((element) => element.position == Alignment.center,
-                      orElse: () => ToastModel((_) => const SizedBox()))
-                  .builder(context),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: list
+                    .lastWhere(
+                        (element) => element.position == Alignment.center,
+                        orElse: () => ToastModel((_) => const SizedBox()))
+                    .builder(context),
+              ),
             ),
             //底部
             Positioned(
