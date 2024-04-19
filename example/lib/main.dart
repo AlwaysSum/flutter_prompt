@@ -72,18 +72,21 @@ class _HomeState extends State<Home> {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
+    Prompt.showLoading();
     try {
       platformVersion = await _flutterPromptPlugin.getPlatformVersion() ??
           'Unknown platform version';
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
+    Prompt.hideLoading();
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     if (!mounted) return;
 
+    Prompt.showToast("@@@init",alignment: Alignment.topCenter);
     setState(() {
       _platformVersion = platformVersion;
     });
@@ -92,6 +95,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     var count = 1;
+
+
+    _testAsyncLoading();
 
     final style = MyCustomStyle();
     return Scaffold(
@@ -306,8 +312,8 @@ class _HomeState extends State<Home> {
 Future<int> _testAsyncLoading() {
   Prompt.showLoading(msg: "async loading demo");
   Prompt.showToast("你好啊");
-  // return Future.delayed(const Duration(seconds:2), () => 123)
-      return Future.value(123)
+  return Future.delayed(const Duration(seconds:3), () => 123)
+      // return Future.value(123)
       .whenComplete(() => Prompt.hideLoading());
 }
 

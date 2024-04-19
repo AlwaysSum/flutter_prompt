@@ -107,9 +107,7 @@ class Prompt {
       );
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      instance.toastList.notifyListeners();
-    });
+    instance.toastList.notifyListeners();
 
     ///延时删除
     return Future.delayed(model.duration, () {
@@ -129,30 +127,26 @@ class Prompt {
   ///显示 Loading
   static showLoading({String? msg, String? defaultMsg, Color? maskColor}) {
     _loadingFlag = true;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (_loadingFlag) {
-        instance.loading.value = LoadingModel(
-          (context) => instance.style.customLoadingStyle(
-            context,
-            msg,
-            defaultMsg: defaultMsg,
-            maskColor: maskColor,
-          ),
-          maskColor: maskColor ?? instance.style.loadingDefaultMaskColor,
-        );
-        instance.loading.notifyListeners();
-      }
-    });
+    if (_loadingFlag) {
+      instance.loading.value = LoadingModel(
+        (context) => instance.style.customLoadingStyle(
+          context,
+          msg,
+          defaultMsg: defaultMsg,
+          maskColor: maskColor,
+        ),
+        maskColor: maskColor ?? instance.style.loadingDefaultMaskColor,
+      );
+      instance.loading.notifyListeners();
+    }
   }
 
   ///关闭 Loading
   static hideLoading() {
     _loadingFlag = false;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (!_loadingFlag) {
-        instance.loading.value = null;
-        instance.loading.notifyListeners();
-      }
-    });
+    if (!_loadingFlag) {
+      instance.loading.value = null;
+      instance.loading.notifyListeners();
+    }
   }
 }
