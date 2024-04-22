@@ -9,6 +9,8 @@ class FlutterPromptRoot extends StatelessWidget {
 
   final Widget? child;
 
+
+
   @override
   Widget build(BuildContext context) {
     return DefaultTextStyle(

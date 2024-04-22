@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_prompt/flutter_prompt.dart';
 import 'package:flutter_prompt/src/model/toast_model.dart';
+import 'package:flutter_prompt/src/widget/prompt_value_builder.dart';
 
 /// 存放 toast 的容器
 class ToastContainer extends StatefulWidget {
@@ -13,7 +14,7 @@ class ToastContainer extends StatefulWidget {
 class _ToastContainerState extends State<ToastContainer> {
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
+    return PromptValueListenableBuilder(
       valueListenable: Prompt.instance.toastList,
       builder: (context, list, child) {
         return Stack(

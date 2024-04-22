@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_prompt/flutter_prompt.dart';
+import 'prompt_value_builder.dart';
 
 ///Loading 组件
 class LoadingContainer extends StatelessWidget {
@@ -8,7 +8,7 @@ class LoadingContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
+    return PromptValueListenableBuilder(
       valueListenable: Prompt.instance.loading,
       builder: (context, loading, child) {
         return loading?.builder == null
